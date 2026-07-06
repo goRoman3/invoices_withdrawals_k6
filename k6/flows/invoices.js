@@ -25,7 +25,7 @@ export function buildInvoicePayload(overrides = {}) {
     expectedFiatAmount: String(config.getNumber('EXPECTED_FIAT_AMOUNT', 50)),
     expectedAmount: null,
     fiatCurrencyCode: config.get('FIAT_CODE', 'USD'),
-    expiresAt: config.get('EXPIRES_AT', '2025-12-31T23:59:59.999Z'),
+    expiresAt: config.get('EXPIRES_AT'),
     assetUuid: config.get('ASSET_UUID'),
     clientUuid: config.get('CLIENT_UUID'),
     note: config.get('INVOICE_NOTE', ''),

@@ -25,6 +25,11 @@ function toNum(v, def = 0) {
   return Number.isFinite(n) ? n : def;
 }
 
+// ISO-строка «сейчас + N дней» — для дефолтного expiresAt, чтобы он не протухал
+function isoInDays(days) {
+  return new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString();
+}
+
 // Собираем конфиг единообразно
 const cfg = {
   // --- базовое API ---
@@ -56,7 +61,8 @@ const cfg = {
   CLIENT_UUID: readEnv('CLIENT_UUID'),
   EXPECTED_FIAT_AMOUNT: readEnv('EXPECTED_FIAT_AMOUNT', '99'),
   FIAT_CODE: readEnv('FIAT_CODE', 'USD'),
-  EXPIRES_AT: readEnv('EXPIRES_AT', '2025-12-31T23:59:59.999Z'),
+  // Если EXPIRES_AT не задан в ENV — берём «сейчас + EXPIRES_IN_DAYS» (по умолчанию 30 дней)
+  EXPIRES_AT: readEnv('EXPIRES_AT') || isoInDays(toNum(readEnv('EXPIRES_IN_DAYS', 30), 30)),
   INVOICE_NAME: readEnv('INVOICE_NAME', 'GR8Tech'),
   INVOICE_NOTE: readEnv('INVOICE_NOTE', ''),
 

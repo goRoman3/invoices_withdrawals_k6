@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd "$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "${SCRIPT_DIR}"
 if [ -f .env.local ]; then
 export $(grep -v '^#' .env.local | xargs)
 fi
@@ -11,20 +13,22 @@ fi
 # --- OTP microservice (Node) ---
 : "${OTP_SERVER_PORT:=8787}"
 : "${OTP_PROVIDER_URL:=http://127.0.0.1:${OTP_SERVER_PORT}/otp}"
+: "${OTP_SECRET:=}"
+OTP_SERVER_JS="${ROOT_DIR}/tools/totp-node/server.js"
 
 OTP_SERVER_PID=""
 if command -v node >/dev/null 2>&1; then
-  if [[ -f "${SCRIPT_DIR}/tools/totp-node/server.js" ]]; then
+  if [[ -f "${OTP_SERVER_JS}" ]]; then
     echo "Starting local OTP server on ${OTP_PROVIDER_URL}"
     # пробрасываем OTP_SECRET в окружение сервера
     ( OTP_SECRET="${OTP_SECRET}" OTP_SERVER_PORT="${OTP_SERVER_PORT}" \
-      node "${SCRIPT_DIR}/tools/totp-node/server.js" \
+      node "${OTP_SERVER_JS}" \
       >/dev/null 2>&1 ) &
     OTP_SERVER_PID=$!
     # подождём готовности (микро-таймаут)
     sleep 0.2
   else
-    echo "WARN: tools/totp-node/server.js not found; OTP_PROVIDER_URL will be ignored"
+    echo "WARN: ${OTP_SERVER_JS} not found; OTP_PROVIDER_URL will be ignored"
   fi
 else
   echo "WARN: node is not installed; OTP_PROVIDER_URL will be ignored"
