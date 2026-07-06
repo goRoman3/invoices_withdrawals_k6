@@ -1,0 +1,51 @@
+# ---------- Secrets / env ----------
+# Никогда не коммитим реальные значения. Коммитим только *.example шаблоны.
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# TRON / crypto ключи, сертификаты
+*.pem
+*.key
+*.p12
+*.keystore
+id_rsa*
+gitlab
+gitlab.pub
+
+# ---------- Dependencies ----------
+node_modules/
+**/node_modules/
+
+# ---------- Logs & runtime ----------
+*.log
+logs/
+otp-server.*.log
+
+# ---------- k6 / monitoring output ----------
+*.k6-summary.json
+summary.json
+influx-data/
+grafana-data/
+
+# ---------- Claude Code / AI tooling ----------
+.claude/
+**/.claude/
+.claudesync/
+.aider*
+CLAUDE.local.md
+
+# ---------- IDE / editor ----------
+.vscode/
+.idea/
+*.code-workspace
+
+# ---------- Static analysis ----------
+.scannerwork/
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db

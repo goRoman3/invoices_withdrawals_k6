@@ -1,0 +1,12 @@
+
+{
+  "name": "deposit-service",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "tronweb": "^5.3.0"
+  }
+}
