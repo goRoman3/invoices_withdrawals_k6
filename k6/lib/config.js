@@ -21,6 +21,8 @@ function toBool(v, def = false) {
 }
 
 function toNum(v, def = 0) {
+  // пустая строка/undefined/null означают «значение не задано» → берём дефолт
+  if (v === '' || v === undefined || v === null) return def;
   const n = Number(v);
   return Number.isFinite(n) ? n : def;
 }
@@ -71,6 +73,25 @@ const cfg = {
   WD_AMOUNT: readEnv('WD_AMOUNT', '10'),
   WD_AML: readEnv('WD_AML', 'MEDIUM'),
 
+  // --- Управление прогоном ---
+  VUS: readEnv('VUS'),
+  ITERATIONS: readEnv('ITERATIONS'),
+  ITERATION_DELAY: readEnv('ITERATION_DELAY'),
+  MAX_DURATION: readEnv('MAX_DURATION'),
+  OTP_PROVIDER_URL: readEnv('OTP_PROVIDER_URL'),
+
+  // --- Профиль нагрузки (шт/час и минуты фаз) ---
+  SMOKE_PER_H: readEnv('SMOKE_PER_H'),
+  SMOKE_MIN: readEnv('SMOKE_MIN'),
+  RAMP_START_PER_H: readEnv('RAMP_START_PER_H'),
+  RAMP_END_PER_H: readEnv('RAMP_END_PER_H'),
+  RAMP_MIN: readEnv('RAMP_MIN'),
+  HOLD_MIN: readEnv('HOLD_MIN'),
+  SPIKE_MULT: readEnv('SPIKE_MULT'),
+  SPIKE_MIN: readEnv('SPIKE_MIN'),
+  SOAK_PER_H: readEnv('SOAK_PER_H'),
+  SOAK_MIN: readEnv('SOAK_MIN'),
+
   // --- Ретраи/тюнинг/отладка ---
   HTTP_RETRIES: toNum(readEnv('HTTP_RETRIES', 2)),
   INVOICE_RETRIES: toNum(readEnv('INVOICE_RETRIES', 1)),
@@ -111,7 +132,8 @@ function validate() {
 validate();
 
 export const config = {
-  get: (k, def = '') => (cfg[k] !== undefined ? cfg[k] : def),
+  // пустая строка означает «не задано» → возвращаем дефолт вызывающей стороны
+  get: (k, def = '') => (cfg[k] !== undefined && cfg[k] !== '' ? cfg[k] : def),
   getNumber: (k, def = 0) => toNum(cfg[k], def),
   getBoolean: (k, def = false) => toBool(cfg[k], def),
 };
