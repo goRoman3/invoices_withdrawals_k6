@@ -11,7 +11,7 @@ function perHourToPerMinInt(v) {
   return Math.max(1, Math.round(perMin)); // arrival-rate требует целые
 }
 
-// ── читаем настройки (перекрывай в .env.local при необходимости) ──────────────
+// ── настройки нагрузки ────────────────────────────────────────────────────────
 // целевая нагрузка для withdrawals ~500/ч
 const RAMP_START_H = config.getNumber('RAMP_START_PER_H', 350);  // старт высокий
 const RAMP_END_H   = config.getNumber('RAMP_END_PER_H',   500);  // целевая 500/ч

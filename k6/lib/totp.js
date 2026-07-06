@@ -1,5 +1,5 @@
 // k6/lib/totp.js — RFC 4226/6238 TOTP (Base32 + HMAC-SHA1) без зависимостей.
-// Совместим с вашим tools/totp-node/totp.js (CryptoJS): одинаковые входы → одинаковые коды.
+// Совместим с tools/totp-node/totp.js (CryptoJS): одинаковые входы → одинаковые коды.
 
 const B32 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
 

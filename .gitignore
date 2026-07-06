@@ -7,6 +7,12 @@
 **/.env.*
 !**/.env.example
 
+# Пул юзеров для мульти-юзер тестов (реальные логины/пароли/OTP). Коммитим только *.example.
+*.local.js
+**/*.local.js
+!*.example.js
+!**/*.example.js
+
 # TRON / crypto ключи, сертификаты
 *.pem
 *.key

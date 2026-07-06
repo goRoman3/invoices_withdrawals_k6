@@ -3,8 +3,7 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { config } from '../lib/config.js';
 import { getAuthHeaders, refreshAuth } from '../lib/auth.js';
-import { fetchOtp } from '../lib/otp_provider.js'; // NEW
-import { Counter } from 'k6/metrics';
+import { fetchOtp } from '../lib/otp_provider.js';import { Counter } from 'k6/metrics';
 
 export const withdraw_calc_ok = new Counter('withdraw_calc_ok');
 export const withdraw_send_ok = new Counter('withdraw_send_ok');
@@ -44,16 +43,14 @@ export function createWithdrawalTwoStep() {
 
   // ===== 1) CALCULATE (с OTP) =====
   let headers = baseHeaders();
-  headers['X-OTP'] = fetchOtp(); // NEW
-
+  headers['X-OTP'] = fetchOtp();
   let calcRes = http.post(calcUrl, JSON.stringify(payloadCalc()), { headers, tags: { slo: true, op: 'withdraw_calc' }});
 
   if (calcRes.status === 401 || calcRes.status === 403) {
     refreshAuth();
     sleep(0.2);
     headers = baseHeaders();
-    headers['X-OTP'] = fetchOtp(); // NEW
-    calcRes = http.post(calcUrl, JSON.stringify(payloadCalc()), { headers, tags: { slo: true, op: 'withdraw_calc' }});
+    headers['X-OTP'] = fetchOtp();    calcRes = http.post(calcUrl, JSON.stringify(payloadCalc()), { headers, tags: { slo: true, op: 'withdraw_calc' }});
   }
 
   const calcOk = check(calcRes, {
@@ -84,16 +81,14 @@ export function createWithdrawalTwoStep() {
   };
 
   headers = baseHeaders();
-  headers['X-OTP'] = fetchOtp(); // NEW
-
+  headers['X-OTP'] = fetchOtp();
   let sendRes = http.post(sendUrl, JSON.stringify(sendPayload), { headers, tags: { slo: true, op: 'withdraw_send' }});
 
   if (sendRes.status === 401 || sendRes.status === 403) {
     refreshAuth();
     sleep(0.2);
     headers = baseHeaders();
-    headers['X-OTP'] = fetchOtp(); // NEW
-    sendRes = http.post(sendUrl, JSON.stringify(sendPayload), { headers, tags: { slo: true, op: 'withdraw_send' }});
+    headers['X-OTP'] = fetchOtp();    sendRes = http.post(sendUrl, JSON.stringify(sendPayload), { headers, tags: { slo: true, op: 'withdraw_send' }});
   }
 
   const sendOk = check(sendRes, {

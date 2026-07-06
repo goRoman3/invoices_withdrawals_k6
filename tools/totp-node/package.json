@@ -5,7 +5,6 @@
   "type": "commonjs",
   "scripts": {
     "start": "node totp.js",
-    "dev": "OTP_SECRET=\"YOUR_SECRET\" node totp.js",
     "serve": "node server.js"
   },
   "dependencies": {
