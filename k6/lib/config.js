@@ -63,8 +63,13 @@ const cfg = {
   FIAT_CODE: readEnv('FIAT_CODE', 'USD'),
   // Если EXPIRES_AT не задан в ENV — берём «сейчас + EXPIRES_IN_DAYS» (по умолчанию 30 дней)
   EXPIRES_AT: readEnv('EXPIRES_AT') || isoInDays(toNum(readEnv('EXPIRES_IN_DAYS', 30), 30)),
-  INVOICE_NAME: readEnv('INVOICE_NAME', 'GR8Tech'),
+  INVOICE_NAME: readEnv('INVOICE_NAME', 'load-test'),
   INVOICE_NOTE: readEnv('INVOICE_NOTE', ''),
+
+  // --- Withdrawals ---
+  WD_RECIPIENT: readEnv('WD_RECIPIENT'),
+  WD_AMOUNT: readEnv('WD_AMOUNT', '10'),
+  WD_AML: readEnv('WD_AML', 'MEDIUM'),
 
   // --- Ретраи/тюнинг/отладка ---
   HTTP_RETRIES: toNum(readEnv('HTTP_RETRIES', 2)),

@@ -38,7 +38,7 @@ fi
 : "${K6_SCRIPT:=main.invoices.arrival.js}"
 : "${VUS:=1}"
 : "${ITERATIONS:=1}"
-: "${BASE_URL:=https://gateway.dev.gr8.sre.ideasoft.io}"
+: "${BASE_URL:=}"   # задаётся в .env.local
 
 # KC / OTP
 : "${ACCESS_TOKEN_MANUAL:=}"

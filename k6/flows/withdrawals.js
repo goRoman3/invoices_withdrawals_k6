@@ -28,7 +28,7 @@ function payloadCalc() {
   return {
     assetUuid: config.get('ASSET_UUID'),
     expectedAssetAmount: String(config.get('WD_AMOUNT', '10')),
-    recipientAddress: config.get('WD_RECIPIENT', 'TAPPzcoEzAdaG6fR8rsrRTmi9avbMuuRH3'),
+    recipientAddress: config.get('WD_RECIPIENT'),
     amlRiskLevel: config.get('WD_AML', 'MEDIUM'),
     memo: null,
     note: null,
@@ -77,7 +77,7 @@ export function createWithdrawalTwoStep() {
     expectedAssetAmount: String(config.get('WD_AMOUNT', '10')),
     memo: null,
     note: null,
-    recipientAddress: config.get('WD_RECIPIENT', 'TAPPzcoEzAdaG6fR8rsrRTmi9avbMuuRH3'),
+    recipientAddress: config.get('WD_RECIPIENT'),
     networkFee,
     clientAddressUuid: null,
     type: 'DEFAULT',

@@ -29,7 +29,7 @@ export function buildInvoicePayload(overrides = {}) {
     assetUuid: config.get('ASSET_UUID'),
     clientUuid: config.get('CLIENT_UUID'),
     note: config.get('INVOICE_NOTE', ''),
-    name: config.get('INVOICE_NAME', 'GR8Tech'),
+    name: config.get('INVOICE_NAME', 'load-test'),
   };
   return { ...basePayload, ...overrides };
 }
